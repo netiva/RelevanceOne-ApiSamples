@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RelevanceApiExamples.Hmac",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Constants", "Constants\Constants.csproj", "{DF08F2A5-54E0-4A30-A4B2-60D9B5FD156C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RelevanceApiExample.Identity", "RelevanceApiExample.Identity\RelevanceApiExample.Identity.csproj", "{B383B71C-BCE5-49E0-B600-B22A7E0021E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DF08F2A5-54E0-4A30-A4B2-60D9B5FD156C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF08F2A5-54E0-4A30-A4B2-60D9B5FD156C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF08F2A5-54E0-4A30-A4B2-60D9B5FD156C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B383B71C-BCE5-49E0-B600-B22A7E0021E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B383B71C-BCE5-49E0-B600-B22A7E0021E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B383B71C-BCE5-49E0-B600-B22A7E0021E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B383B71C-BCE5-49E0-B600-B22A7E0021E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

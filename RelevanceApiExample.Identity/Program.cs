@@ -21,13 +21,9 @@ namespace RelevanceApiExample.Identity
 
         static TokenResponse RequestToken()
         {
-           var client = new TokenClient(
-                Constants.TokenEndpoint,
-                "ra_identity",
-                "r1a2n3d4o5m");
+            var client = new TokenClient(Constants.TokenEndpoint, "ra_apidev", "r1a2n3d4o5m");
 
-
-            return client.RequestResourceOwnerPasswordAsync("name@mail.com","SeCur3PassW0rd", "permissions openid").Result;
+            return client.RequestResourceOwnerPasswordAsync("apidev@relevanceone.com", "welc0mE", "permissions openid").Result;
         }
 
         static void CallService(string token)
