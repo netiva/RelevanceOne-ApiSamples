@@ -1,8 +1,8 @@
 # RelevanceOne API Samples
 
-All the publicly available API methods can be found and tested on https://api.relevanceone.com/swagger/ui/index. For testing of this methods and actually sending data to the API, you'll need to have credentials (a test credentials will be added soon)
+All the publicly available API methods can be found and tested on https://api.relevanceone.com/swagger/ui/index. For testing of this methods and actually sending data to the API, you'll need to have credentials (a test credentials will be added soon). To log in with your existing credentials you'll need to click at least one of the "ON/OFF" buttons in the top-right  corner of each method (as shown on the image below). After selecting the 2 checkboxes you'll be redirected to a login page. On succesful login the "ON/OFF" button will show blue icon indicating "ON" and you can execute (try) each method by pressing the "Try it out!" button in the lower-left corner on each method. Also all the data that is send (under the column "value") can be modified.
 
-
+![alt tag](https://raw.githubusercontent.com/netiva/RelevanceOne-ApiSamples/master/api%20examples.JPG)
 
 ## Flow on the client side (HMAC Authentication):
 
