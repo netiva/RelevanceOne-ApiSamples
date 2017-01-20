@@ -7,7 +7,7 @@ using System.Runtime.Caching;
 
 namespace RelevanceApiExamples.Hmac
 {
-    class Program
+    public class Program
     {
 
         private static DateTime UnixEpoch = new DateTime(1970, 01, 01, 0, 0, 0, DateTimeKind.Utc);
@@ -24,13 +24,19 @@ namespace RelevanceApiExamples.Hmac
 
             Console.WriteLine();
 
-            Console.WriteLine("Starting to send POS data!");
-            PostPosData();
-            Console.WriteLine("Finished with sending POS data!");
+            Console.WriteLine("Starting to send Sales data!");
+            PostSalesData();
+            Console.WriteLine("Finished with sending Sales data!");
 
             Console.WriteLine();
 
-            Console.WriteLine("Application finished. Press any ENTER to exit.");
+            Console.WriteLine("Starting to send Media data!");
+            MediaClipsData();
+            Console.WriteLine("Finished with sending Media data!");
+
+            Console.WriteLine();
+
+            Console.WriteLine("Application finished. Press ay key to exit.");
             Console.ReadKey();
 
         }
@@ -65,14 +71,15 @@ namespace RelevanceApiExamples.Hmac
                 if (result)
                 {
                     // Checking the status code of the returned response
-                    // A successful response is with HTTP 200 status
+                    // A successful response is with HTTP 2** status
                     Console.WriteLine(response.StatusCode);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        // If the data is successfully saved, then a "Saved" message is returned
-                        string content = response.Content.ReadAsStringAsync().Result;
-                        Console.WriteLine(content);
-                    }
+
+                    // If we get an unsuccessful response, then the content will have some data in it.
+                    Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+
+                    // The response expected is HTTP status code 204 which means no content is returned, but the execution was successful.
+                    if (response.StatusCode == HttpStatusCode.NoContent)
+                        Console.WriteLine("Success!");
                 }
                 else
                 {
@@ -80,11 +87,10 @@ namespace RelevanceApiExamples.Hmac
                 }
             }
         }
-
-        private static void PostPosData()
+        private static void PostSalesData()
         {
             // Creating a post request message with URL pointing to the api method that is supposed to be called
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Constants.RelevanceOneApiUrl + Constants.ApiImportPosDataForShop);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Constants.RelevanceOneApiUrl + Constants.ApiImportSalesDataForShop);
 
             // Randomly generated string (could be anything that the client will recognize that the response is the same as the call it made)
             string nonce = Guid.NewGuid().ToString("N");
@@ -97,7 +103,7 @@ namespace RelevanceApiExamples.Hmac
             MachineKeyEncoder.AddAuthorizationHeader(request, nonce, timestampString);
 
             // Adding the content that is going to be posted and telling the request that the content that is send is in JSON format with UTF8 encoding
-            request.Content = new StringContent(Constants.PosExampleDataForShop, Encoding.UTF8, "application/json");
+            request.Content = new StringContent(Constants.SalesExampleDataForShop, Encoding.UTF8, "application/json");
 
             using (HttpClient client = new HttpClient())
             {
@@ -111,14 +117,61 @@ namespace RelevanceApiExamples.Hmac
                 if (result)
                 {
                     // Checking the status code of the returned response
-                    // A successful response is with HTTP 200 status
+                    // A successful response is with HTTP 2** status
                     Console.WriteLine(response.StatusCode);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        // If the data is successfully saved, then a "Saved" message is returned
-                        string content = response.Content.ReadAsStringAsync().Result;
-                        Console.WriteLine(content);
-                    }
+
+                    // If we get an unsuccessful response, then the content will have some data in it.
+                    Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+
+                    // The response expected is HTTP status code 204 which means no content is returned, but the execution was successful.
+                    if (response.StatusCode == HttpStatusCode.NoContent)
+                        Console.WriteLine("Success!");
+                }
+                else
+                {
+                    Console.WriteLine("The server response was not valid");
+                }
+            }
+        }
+        private static void MediaClipsData()
+        {
+            // Creating a post request message with URL pointing to the api method that is supposed to be called
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, Constants.RelevanceOneApiUrl + Constants.ApiImportMediaClipsData);
+
+            // Randomly generated string (could be anything that the client will recognize that the response is the same as the call it made)
+            string nonce = Guid.NewGuid().ToString("N");
+
+            // We adopt a convention of calculating the time starting from Unix epoch time
+            // We adopt a convention of calculating the time starting from Unix epoch time
+            DateTimeOffset timestamp = DateTimeOffset.UtcNow;
+            string timestampString = ((ulong)(timestamp - UnixEpoch).TotalSeconds).ToString();
+            // Adding the authorization header with a specific nonce
+            MachineKeyEncoder.AddAuthorizationHeader(request, nonce, timestampString);
+
+            // Adding the content that is going to be posted and telling the request that the content that is send is in JSON format with UTF8 encoding
+            request.Content = new StringContent(Constants.MediaExampleClipData, Encoding.UTF8, "application/json");
+
+            using (HttpClient client = new HttpClient())
+            {
+                // Actually sending the request
+                // NOTE: Since the method is asynchronous, but we intentionally wait for
+                HttpResponseMessage response = client.SendAsync(request).Result;
+
+                bool result = ValidateResponse(response, nonce, request);
+
+                //If we are sure that the response is coming from the server that we have send to, only then we process the response
+                if (result)
+                {
+                    // Checking the status code of the returned response
+                    // A successful response is with HTTP 2** status
+                    Console.WriteLine(response.StatusCode);
+
+                    // If we get an unsuccessful response, then the content will have some data in it.
+                    Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+
+                    // The response expected is HTTP status code 204 which means no content is returned, but the execution was successful.
+                    if (response.StatusCode == HttpStatusCode.NoContent)
+                        Console.WriteLine("Success!");
                 }
                 else
                 {
